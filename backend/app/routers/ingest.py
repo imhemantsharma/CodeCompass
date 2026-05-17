@@ -1,6 +1,6 @@
 from typing import Dict, Any, List
 
-from fastapi import APIRouter, HTTPException, BackgroundTasks
+from fastapi import APIRouter, HTTPException
 
 from app.models.schemas import IngestRequest, IngestResponse, IngestStatusResponse
 from app.services.git_service import clone_repo, get_repo_id
@@ -17,61 +17,6 @@ router = APIRouter()
 status_store: Dict[str, Dict[str, Any]] = {}
 
 MAX_CHUNKS = 500  # Free-tier quota guard
-
-
-# ---------------------------------------------------------------------------
-# Background ingestion task
-# ---------------------------------------------------------------------------
-
-def _ingest_task(github_url: str, repo_id: str) -> None:
-    """Clone, parse, embed and store a repository.  Runs in a background thread."""
-    try:
-        # 1. Clone
-        _, repo_name, clone_path = clone_repo(github_url)
-
-        # 2. Parse into chunks
-        chunks = parse_repository(clone_path)
-
-        # 3. Cap at MAX_CHUNKS for free-tier safety
-        chunks = chunks[:MAX_CHUNKS]
-
-        # 4. Extract texts and metadatas
-        texts: List[str] = [c["content"] for c in chunks]
-        metadatas: List[Dict[str, str]] = [
-            {"path": c["path"], "filename": c["filename"]}
-            for c in chunks
-        ]
-
-        # 5. Embed
-        embeddings = get_embeddings(texts)
-
-        # 6. Store in ChromaDB
-        store_documents(repo_id, texts, embeddings, metadatas)
-
-        # 7. Update status store
-        unique_paths: List[str] = list(
-            {c["path"] for c in chunks}
-        )
-        status_store[repo_id] = {
-            "name": repo_name,
-            "url": github_url,
-            "path": clone_path,
-            "files": unique_paths,
-            "file_count": len(unique_paths),
-            "status": "ready",
-        }
-
-    except Exception as exc:
-        status_store[repo_id] = {
-            "name": "",
-            "url": github_url,
-            "path": "",
-            "files": [],
-            "file_count": 0,
-            "status": "error",
-            "error": str(exc),
-        }
-        raise
 
 
 # ---------------------------------------------------------------------------

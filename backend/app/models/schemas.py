@@ -85,6 +85,7 @@ class SetupStep(BaseModel):
 class SetupResponse(BaseModel):
     steps: List[SetupStep]
     environment_vars: List[str]
+    notes: Optional[str] = None
 
 
 # ── Analysis – Dependencies ──────────────────────────────────────────────────
@@ -93,6 +94,7 @@ class Dependency(BaseModel):
     name: str
     purpose: str
     category: str      # frontend | backend | database | devops | testing | utility
+    version: Optional[str] = None
 
 
 class DependenciesResponse(BaseModel):
