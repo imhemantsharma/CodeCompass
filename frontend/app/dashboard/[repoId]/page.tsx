@@ -105,7 +105,7 @@ function ArchitectureTab({ repoId }: { repoId: string }) {
 export default function DashboardPage() {
   const params = useParams();
   const router = useRouter();
-  const repoId = params?.repoId as string;
+  const repoId = Array.isArray(params?.repoId) ? params.repoId[0] : (params?.repoId ?? '');
 
   const [status, setStatus] = useState<StatusResponse | null>(null);
   const [statusError, setStatusError] = useState<string | null>(null);
