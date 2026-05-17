@@ -4,7 +4,7 @@ import shutil
 import stat
 import tempfile
 
-from dulwich import porcelain
+import git
 
 
 def get_repo_id(github_url: str) -> str:
@@ -29,7 +29,7 @@ def clone_repo(github_url: str) -> tuple:
     if os.path.exists(clone_path):
         _force_remove(clone_path)
 
-    porcelain.clone(github_url, clone_path, depth=1, checkout=True)
+    git.Repo.clone_from(github_url, clone_path, depth=1, no_single_branch=False)
 
     repo_name = github_url.rstrip("/").split("/")[-1]
     if repo_name.endswith(".git"):

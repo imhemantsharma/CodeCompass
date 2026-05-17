@@ -1,7 +1,7 @@
 fastapi==0.136.1
 uvicorn==0.47.0
 python-dotenv==1.2.2
-dulwich==0.22.6
+GitPython==3.1.50
 chromadb==1.5.9
 google-genai==2.2.0
 google-generativeai==0.8.6
