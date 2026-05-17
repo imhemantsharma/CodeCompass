@@ -1,7 +1,7 @@
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 // Set to true to skip all API calls and use mock data for UI development
-export const USE_MOCK = true;
+export const USE_MOCK = false;
 
 export interface IngestResponse {
   repo_id: string;
