@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-background: #FFFFFF;
+  --color-surface: #FAFAFA;
+  --color-surface-secondary: #F4F4F5;
+  --color-accent: #18181B;
+  --color-accent-dim: rgba(24, 24, 27, 0.06);
+  --color-accent-glow: rgba(24, 24, 27, 0.12);
+  --color-text-primary: #18181B;
+  --color-text-muted: #71717A;
+  --color-border: rgba(0, 0, 0, 0.09);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F4F4F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #D4D4D8;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A1A1AA;
+}
+
+/* Glass — light */
+.glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  border-radius: 12px;
+}
+
+.glass-subtle {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 8px;
+}
+
+/* Shimmer skeleton — light */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    #F4F4F5 25%,
+    #E4E4E7 50%,
+    #F4F4F5 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* React Flow */
+@keyframes flowDash {
+  0%  { stroke-dashoffset: 24; }
+  100% { stroke-dashoffset: 0; }
+}
+.animated-edge path {
+  stroke-dasharray: 8 4;
+  animation: flowDash 1.5s linear infinite;
+}
+.react-flow__renderer { background: transparent !important; }
+.react-flow__background { background: transparent !important; }
+.react-flow__pane { cursor: default !important; }
+
+/* Code blocks */
+pre {
+  background: #1C1C1E !important;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875em;
+}
+
+/* Prose for react-markdown */
+.prose-content {
+  color: #18181B;
+}
+.prose-content h1,
+.prose-content h2,
+.prose-content h3,
+.prose-content h4 {
+  color: #18181B;
+  font-weight: 600;
+}
+.prose-content p {
+  color: #52525B;
+  line-height: 1.75;
+  margin-bottom: 0.75rem;
+}
+.prose-content ul,
+.prose-content ol {
+  color: #52525B;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+.prose-content li {
+  margin-bottom: 0.25rem;
+}
+.prose-content code {
+  background: #F4F4F5;
+  color: #18181B;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  border: 1px solid #E4E4E7;
+}
+.prose-content strong {
+  color: #18181B;
+  font-weight: 600;
+}
+.prose-content blockquote {
+  border-left: 3px solid #D4D4D8;
+  padding-left: 1rem;
+  color: #71717A;
+  font-style: italic;
+}
+
+/* Focus ring */
+*:focus-visible {
+  outline: 2px solid rgba(24, 24, 27, 0.5);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
