@@ -1,5 +1,5 @@
 import os
-from typing import List
+from typing import List, Optional
 
 from google import genai
 from google.genai import types
@@ -9,7 +9,7 @@ load_dotenv()
 
 CHAT_MODEL = "gemini-2.5-flash"
 
-_client: genai.Client | None = None
+_client: Optional[genai.Client] = None
 
 
 def _get_client() -> genai.Client:

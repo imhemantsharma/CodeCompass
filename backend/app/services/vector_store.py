@@ -1,5 +1,5 @@
 import os
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 
 import chromadb
 from chromadb.config import Settings
@@ -10,11 +10,11 @@ _CHROMA_PATH = os.path.join(
     ".chroma",
 )
 
-_client: chromadb.PersistentClient | None = None
+_client: Optional[chromadb.PersistentClient] = None
 _ef = DefaultEmbeddingFunction()
 
 
-def _get_client() -> chromadb.PersistentClient:
+def _get_client():
     global _client
     if _client is None:
         _client = chromadb.PersistentClient(
