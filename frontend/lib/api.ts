@@ -1,4 +1,4 @@
-const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+const BASE = process.env.NEXT_PUBLIC_API_URL ?? "/_/backend";
 
 // Set to true to skip all API calls and use mock data for UI development
 export const USE_MOCK = false;
