@@ -5,10 +5,7 @@ import chromadb
 from chromadb.config import Settings
 from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
 
-_CHROMA_PATH = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-    ".chroma",
-)
+_CHROMA_PATH = "/tmp/chroma"
 
 _client: Optional[chromadb.PersistentClient] = None
 _ef = DefaultEmbeddingFunction()

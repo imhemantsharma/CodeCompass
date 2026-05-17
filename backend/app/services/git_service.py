@@ -4,7 +4,7 @@ import shutil
 import stat
 import tempfile
 
-import git
+from dulwich import porcelain
 
 
 def get_repo_id(github_url: str) -> str:
@@ -16,28 +16,21 @@ def get_clone_path(repo_id: str) -> str:
 
 
 def _force_remove(path: str) -> None:
-    """Remove directory, handling Windows read-only git objects."""
     def _on_error(func, fpath, _exc):
         os.chmod(fpath, stat.S_IWRITE)
         func(fpath)
     shutil.rmtree(path, onerror=_on_error)
 
 
-def clone_repo(github_url: str) -> tuple[str, str, str]:
+def clone_repo(github_url: str) -> tuple:
     repo_id = get_repo_id(github_url)
     clone_path = get_clone_path(repo_id)
 
     if os.path.exists(clone_path):
         _force_remove(clone_path)
 
-    repo = git.Repo.clone_from(
-        github_url,
-        clone_path,
-        depth=1,
-        no_single_branch=False,
-    )
+    porcelain.clone(github_url, clone_path, depth=1, checkout=True)
 
-    # Derive a human-readable name from the URL
     repo_name = github_url.rstrip("/").split("/")[-1]
     if repo_name.endswith(".git"):
         repo_name = repo_name[:-4]
